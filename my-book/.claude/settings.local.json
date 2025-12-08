@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(test:*)",
+      "Bash(npm install)",
+      "Bash(timeout 10 npm start:*)",
+      "Bash(.specify/scripts/bash/create-phr.sh:*)",
+      "Bash(ls:*)",
+      "Bash(git config:*)",
+      "Bash(npm start)",
+      "Bash(timeout 5 echo:*)",
+      "Bash(npm start:*)",
+      "Bash(timeout 10 echo:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

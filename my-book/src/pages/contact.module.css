@@ -1,0 +1,384 @@
+.contactContainer {
+  padding: 3rem 2rem;
+  min-height: 70vh;
+}
+
+.pageTitle {
+  font-size: 3rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.introText {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 3rem;
+}
+
+.introText p {
+  font-size: 1.25rem;
+  color: #666;
+  line-height: 1.8;
+}
+
+.contactGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contactCard {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  border-top: 4px solid #667eea;
+}
+
+.contactCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.cardIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.contactCard h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.75rem;
+}
+
+.contactCard p {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.contactLink {
+  display: inline-block;
+  color: #667eea;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.contactLink:hover {
+  color: #764ba2;
+  text-decoration: underline;
+}
+
+.faqSection {
+  max-width: 900px;
+  margin: 4rem auto;
+  padding-top: 2rem;
+  border-top: 2px solid #e0e0e0;
+}
+
+.faqSection h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #667eea;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.faqItem {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 12px;
+  border-left: 4px solid #667eea;
+}
+
+.faqItem h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.75rem;
+}
+
+.faqItem p {
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.supportSection {
+  max-width: 900px;
+  margin: 4rem auto;
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+  border-radius: 12px;
+  border: 2px solid #667eea30;
+}
+
+.supportSection h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #667eea;
+  margin-bottom: 1.5rem;
+}
+
+.supportSection p {
+  font-size: 1.125rem;
+  color: #555;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.supportList {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+}
+
+.supportList li {
+  font-size: 1.125rem;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  background: white;
+  border-radius: 8px;
+  color: #555;
+}
+
+.socialSection {
+  max-width: 900px;
+  margin: 4rem auto;
+  text-align: center;
+}
+
+.socialSection h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #667eea;
+  margin-bottom: 2rem;
+}
+
+.socialLinks {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.socialButton {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.socialButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  color: white;
+}
+
+/* Responsive Design */
+
+/* Tablets (996px and below) */
+@media (max-width: 996px) {
+  .contactContainer {
+    padding: 2.5rem 2rem;
+  }
+
+  .pageTitle {
+    font-size: 2.5rem;
+  }
+
+  .contactGrid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+}
+
+/* Mobile (768px and below) */
+@media (max-width: 768px) {
+  .contactContainer {
+    padding: 2rem 1.5rem;
+  }
+
+  .pageTitle {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .introText {
+    margin-bottom: 2.5rem;
+  }
+
+  .introText p {
+    font-size: 1.125rem;
+  }
+
+  .contactGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .contactCard {
+    padding: 1.75rem;
+  }
+
+  .cardIcon {
+    font-size: 2.5rem;
+  }
+
+  .contactCard h3 {
+    font-size: 1.35rem;
+  }
+
+  .faqSection,
+  .supportSection,
+  .socialSection {
+    margin: 3rem auto;
+  }
+
+  .faqSection h2,
+  .socialSection h2 {
+    font-size: 1.75rem;
+  }
+
+  .faqItem {
+    padding: 1.25rem;
+  }
+
+  .supportSection {
+    padding: 1.75rem;
+  }
+
+  .supportSection h2 {
+    font-size: 1.5rem;
+  }
+
+  .socialLinks {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .socialButton {
+    width: 200px;
+  }
+}
+
+/* Small Mobile (576px and below) */
+@media (max-width: 576px) {
+  .contactContainer {
+    padding: 1.5rem 1rem;
+  }
+
+  .pageTitle {
+    font-size: 1.75rem;
+  }
+
+  .introText p {
+    font-size: 1rem;
+  }
+
+  .contactGrid {
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .contactCard {
+    padding: 1.5rem;
+  }
+
+  .cardIcon {
+    font-size: 2.25rem;
+  }
+
+  .contactCard h3 {
+    font-size: 1.25rem;
+  }
+
+  .contactCard p {
+    font-size: 0.95rem;
+  }
+
+  .faqSection,
+  .supportSection,
+  .socialSection {
+    margin: 2.5rem auto;
+  }
+
+  .faqSection h2,
+  .socialSection h2 {
+    font-size: 1.5rem;
+  }
+
+  .faqItem h3 {
+    font-size: 1.125rem;
+  }
+
+  .faqItem p,
+  .supportSection p,
+  .supportList li {
+    font-size: 0.95rem;
+  }
+
+  .socialButton {
+    width: 180px;
+    padding: 0.675rem 1.5rem;
+  }
+}
+
+/* Extra Small Mobile (480px and below) */
+@media (max-width: 480px) {
+  .contactContainer {
+    padding: 1.25rem 0.75rem;
+  }
+
+  .pageTitle {
+    font-size: 1.6rem;
+  }
+
+  .introText p {
+    font-size: 0.95rem;
+  }
+
+  .contactCard {
+    padding: 1.25rem;
+    border-radius: 10px;
+  }
+
+  .cardIcon {
+    font-size: 2rem;
+  }
+
+  .contactCard h3 {
+    font-size: 1.15rem;
+  }
+
+  .faqItem,
+  .supportSection {
+    padding: 1.25rem;
+    border-radius: 10px;
+  }
+
+  .socialButton {
+    width: 100%;
+    max-width: 250px;
+  }
+}

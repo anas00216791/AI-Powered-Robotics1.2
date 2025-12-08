@@ -1,0 +1,141 @@
+.legalContainer {
+  min-height: calc(100vh - 60px);
+  padding: 3rem 1.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.legalContent {
+  max-width: 900px;
+  margin: 0 auto;
+  background: white;
+  padding: 3rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.legalContent h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.lastUpdated {
+  color: #718096;
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.section h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 1rem;
+  margin-top: 2rem;
+}
+
+.section h3 {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #4a5568;
+  margin-bottom: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.section p {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #4a5568;
+  margin-bottom: 1rem;
+}
+
+.section ul {
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.section li {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #4a5568;
+  margin-bottom: 0.5rem;
+}
+
+.section a {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.section a:hover {
+  color: #764ba2;
+  text-decoration: underline;
+}
+
+.section strong {
+  color: #2d3748;
+  font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .legalContainer {
+    padding: 2rem 1rem;
+  }
+
+  .legalContent {
+    padding: 2rem 1.5rem;
+  }
+
+  .legalContent h1 {
+    font-size: 2rem;
+  }
+
+  .section h2 {
+    font-size: 1.5rem;
+  }
+
+  .section h3 {
+    font-size: 1.2rem;
+  }
+
+  .section p,
+  .section li {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .legalContainer {
+    padding: 1.5rem 0.75rem;
+  }
+
+  .legalContent {
+    padding: 1.5rem 1rem;
+    border-radius: 8px;
+  }
+
+  .legalContent h1 {
+    font-size: 1.75rem;
+  }
+
+  .section h2 {
+    font-size: 1.35rem;
+  }
+
+  .section h3 {
+    font-size: 1.1rem;
+  }
+
+  .section ul {
+    margin-left: 1rem;
+  }
+}

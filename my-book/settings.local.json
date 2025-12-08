@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(if [ -f \".specify/scripts/bash/create-phr.sh\" ])",
+      "Bash(then echo \"exists\")",
+      "Bash(else echo \"not found\")",
+      "Bash(fi)",
+      "Bash(git config:*)",
+      "Bash(ls:*)",
+      "Bash(powershell.exe -File \".specify/scripts/powershell/create-new-feature.ps1\" -Json -Number 002 -ShortName \"gazebo-unity-sim\" \"Module 2: The Digital Twin (Gazebo & Unity) - Physics simulation, environment building, high-fidelity rendering, sensor simulation\")",
+      "Bash(find:*)",
+      "SlashCommand(/sp.plan)",
+      "Bash(powershell.exe -File \".specify/scripts/powershell/setup-plan.ps1\" -Json)",
+      "Bash(if [ -d \"C:\\Users\\HP\\OneDrive\\Desktop\\Hackaton raat\\specs\\002-gazebo-unity-sim\\contracts\" ])",
+      "Bash(else mkdir \"C:\\Users\\HP\\OneDrive\\Desktop\\Hackaton raat\\specs\\002-gazebo-unity-sim\\contracts\")",
+      "Bash(powershell.exe -File \".specify/scripts/powershell/update-agent-context.ps1\" -AgentType claude)",
+      "Bash(powershell.exe -File \".specify/scripts/powershell/create-phr.ps1\" -Title \"architectural plan gazebo unity sim\" -Stage plan -Feature \"002-gazebo-unity-sim\" -Json)",
+      "Bash(if [ ! -d \"history/prompts/002-gazebo-unity-sim\" ])",
+      "Bash(then mkdir -p \"history/prompts/002-gazebo-unity-sim\")",
+      "Bash(powershell.exe -File \".specify/scripts/powershell/check-prerequisites.ps1\" -Json)",
+      "Bash(git fetch:*)",
+      "Bash(powershell.exe -File \".specify/scripts/powershell/create-new-feature.ps1\" -Json -Number 003 -ShortName \"isaac-sim\" \"Module 3: The AI-Robot Brain (NVIDIA Isaac) - Audience: AI/robotics students - Focus: Isaac Sim, synthetic data, Isaac ROS (VSLAM/navigation), Nav2 path planning - Chapters: 1. Isaac Sim: Photoreal simulation & data 2. Isaac ROS: Perception + VSLAM 3. Nav2: Humanoid navigation\")",
+      "Bash(powershell.exe -File \".specify/scripts/powershell/create-new-feature.ps1\" -Json -Number 004 -ShortName \"vla\" \"Module 4: Vision-Language-Action (VLA) - Audience: AI/robotics students and developers - Focus: LLMs for robotics, voice-to-action with OpenAI Whisper, cognitive planning, and autonomous humanoid control\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

@@ -1,0 +1,446 @@
+openapi: 3.0.3
+info:
+  title: RAG Chatbot API
+  description: |
+    REST API for the AI & Robotics Book RAG (Retrieval-Augmented Generation) chatbot.
+    Provides endpoints for querying the book content, submitting feedback, and retrieving analytics.
+  version: 1.0.0
+  contact:
+    name: Book Development Team
+    email: support@example.com
+
+servers:
+  - url: https://chatbot-api.example.com/v1
+    description: Production server
+  - url: http://localhost:8000/v1
+    description: Local development server
+
+tags:
+  - name: Query
+    description: Chat query operations
+  - name: Feedback
+    description: User feedback operations
+  - name: Analytics
+    description: Usage analytics (optional, future)
+
+paths:
+  /query:
+    post:
+      tags:
+        - Query
+      summary: Submit a chat query
+      description: |
+        Submit a natural language query to the chatbot. The system will:
+        1. Embed the query using the configured embedding model
+        2. Retrieve relevant document chunks from Qdrant
+        3. Generate a response using the LLM with retrieved context
+        4. Store the query, retrievals, and response in PostgreSQL
+      operationId: submitQuery
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryRequest'
+            examples:
+              basicQuery:
+                summary: Basic query
+                value:
+                  query: "How do I set up gravity in Gazebo?"
+                  session_id: "user-session-12345"
+              complexQuery:
+                summary: Complex query
+                value:
+                  query: "What's the difference between Gazebo and Unity for sensor simulation?"
+                  session_id: "user-session-67890"
+                  context:
+                    current_module: "module-02"
+                    current_chapter: "chapter-03"
+      responses:
+        '200':
+          description: Query processed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryResponse'
+              examples:
+                successfulResponse:
+                  summary: Successful query response
+                  value:
+                    query_id: "550e8400-e29b-41d4-a716-446655440000"
+                    answer: "To set up gravity in Gazebo, you need to configure the `<physics>` tag in your world file. By default, Gazebo uses gravity of [0, 0, -9.81] m/s² (Earth gravity). You can customize this by modifying the `<gravity>` element..."
+                    sources:
+                      - document: "module-02/chapter-01-gazebo-physics.md"
+                        section: "Physics Engine Configuration"
+                        relevance_score: 0.92
+                      - document: "module-02/chapter-01-gazebo-physics.md"
+                        section: "World File Structure"
+                        relevance_score: 0.85
+                    response_time_ms: 1234
+        '400':
+          description: Invalid request (query too long, malformed JSON, etc.)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "Bad Request"
+                message: "Query text exceeds maximum length of 1000 characters"
+                code: "QUERY_TOO_LONG"
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "Too Many Requests"
+                message: "Rate limit exceeded. Maximum 10 requests per minute."
+                code: "RATE_LIMIT_EXCEEDED"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "Internal Server Error"
+                message: "Failed to connect to vector database"
+                code: "DATABASE_ERROR"
+
+  /query/{query_id}:
+    get:
+      tags:
+        - Query
+      summary: Retrieve a previous query result
+      description: Fetch the full details of a previously submitted query by its ID.
+      operationId: getQuery
+      parameters:
+        - name: query_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique query identifier returned from POST /query
+      responses:
+        '200':
+          description: Query details retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryResponse'
+        '404':
+          description: Query not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "Not Found"
+                message: "Query with ID '550e8400-e29b-41d4-a716-446655440000' not found"
+                code: "QUERY_NOT_FOUND"
+
+  /feedback:
+    post:
+      tags:
+        - Feedback
+      summary: Submit feedback on a query response
+      description: |
+        Submit user feedback (helpful/not helpful, optional text) on a chatbot response.
+        Used to improve retrieval and response quality over time.
+      operationId: submitFeedback
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FeedbackRequest'
+            examples:
+              positiveFeedback:
+                summary: Positive feedback
+                value:
+                  query_id: "550e8400-e29b-41d4-a716-446655440000"
+                  is_helpful: true
+                  feedback_text: "Very clear explanation with good examples!"
+              negativeFeedback:
+                summary: Negative feedback
+                value:
+                  query_id: "550e8400-e29b-41d4-a716-446655440000"
+                  is_helpful: false
+                  feedback_text: "The answer didn't address my specific question about noise models."
+      responses:
+        '201':
+          description: Feedback recorded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeedbackResponse'
+              example:
+                feedback_id: "660e8400-e29b-41d4-a716-446655440001"
+                message: "Thank you for your feedback!"
+        '400':
+          description: Invalid request (missing query_id, feedback text too long, etc.)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Query not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /health:
+    get:
+      tags:
+        - System
+      summary: Health check endpoint
+      description: Returns the health status of the API and its dependencies (Qdrant, PostgreSQL).
+      operationId: healthCheck
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+              example:
+                status: "healthy"
+                timestamp: "2025-12-07T15:30:00Z"
+                dependencies:
+                  qdrant:
+                    status: "connected"
+                    response_time_ms: 12
+                  postgres:
+                    status: "connected"
+                    response_time_ms: 8
+                  llm:
+                    status: "available"
+                    model: "gpt-4"
+        '503':
+          description: Service unavailable (one or more dependencies down)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+              example:
+                status: "unhealthy"
+                timestamp: "2025-12-07T15:30:00Z"
+                dependencies:
+                  qdrant:
+                    status: "disconnected"
+                    error: "Connection timeout"
+                  postgres:
+                    status: "connected"
+                    response_time_ms: 8
+
+components:
+  schemas:
+    QueryRequest:
+      type: object
+      required:
+        - query
+      properties:
+        query:
+          type: string
+          minLength: 1
+          maxLength: 1000
+          description: Natural language question from the user
+          example: "How do I simulate a LiDAR sensor in Gazebo?"
+        session_id:
+          type: string
+          maxLength: 255
+          description: Anonymous session identifier for analytics (optional)
+          example: "user-session-abc123"
+        context:
+          type: object
+          description: Optional context to improve retrieval (e.g., current module/chapter)
+          properties:
+            current_module:
+              type: string
+              example: "module-02"
+            current_chapter:
+              type: string
+              example: "chapter-03"
+          additionalProperties: true
+
+    QueryResponse:
+      type: object
+      required:
+        - query_id
+        - answer
+        - sources
+        - response_time_ms
+      properties:
+        query_id:
+          type: string
+          format: uuid
+          description: Unique identifier for this query
+          example: "550e8400-e29b-41d4-a716-446655440000"
+        answer:
+          type: string
+          description: Generated natural language answer
+          example: "To simulate a LiDAR sensor in Gazebo, you need to add a sensor plugin to your robot's URDF..."
+        sources:
+          type: array
+          description: Retrieved document chunks that informed the answer
+          items:
+            $ref: '#/components/schemas/Source'
+          minItems: 0
+          maxItems: 10
+        response_time_ms:
+          type: integer
+          description: Total time taken to process the query (in milliseconds)
+          minimum: 0
+          example: 1234
+
+    Source:
+      type: object
+      required:
+        - document
+        - relevance_score
+      properties:
+        document:
+          type: string
+          description: Source document path
+          example: "module-02/chapter-03-sensor-simulation.md"
+        section:
+          type: string
+          description: Section title within the document (if available)
+          example: "LiDAR Configuration"
+        relevance_score:
+          type: number
+          format: float
+          minimum: 0.0
+          maximum: 1.0
+          description: Cosine similarity score between query and chunk
+          example: 0.89
+
+    FeedbackRequest:
+      type: object
+      required:
+        - query_id
+        - is_helpful
+      properties:
+        query_id:
+          type: string
+          format: uuid
+          description: ID of the query being rated
+          example: "550e8400-e29b-41d4-a716-446655440000"
+        is_helpful:
+          type: boolean
+          description: Whether the answer was helpful (thumbs up/down)
+          example: true
+        feedback_text:
+          type: string
+          maxLength: 500
+          description: Optional detailed feedback text
+          example: "Great explanation, but I would have liked more code examples."
+
+    FeedbackResponse:
+      type: object
+      required:
+        - feedback_id
+        - message
+      properties:
+        feedback_id:
+          type: string
+          format: uuid
+          description: Unique identifier for the feedback record
+          example: "660e8400-e29b-41d4-a716-446655440001"
+        message:
+          type: string
+          description: Confirmation message
+          example: "Thank you for your feedback!"
+
+    HealthResponse:
+      type: object
+      required:
+        - status
+        - timestamp
+      properties:
+        status:
+          type: string
+          enum: [healthy, unhealthy]
+          description: Overall service health
+        timestamp:
+          type: string
+          format: date-time
+          description: Health check timestamp (ISO 8601)
+        dependencies:
+          type: object
+          description: Status of external dependencies
+          properties:
+            qdrant:
+              $ref: '#/components/schemas/DependencyStatus'
+            postgres:
+              $ref: '#/components/schemas/DependencyStatus'
+            llm:
+              $ref: '#/components/schemas/DependencyStatus'
+          additionalProperties:
+            $ref: '#/components/schemas/DependencyStatus'
+
+    DependencyStatus:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          enum: [connected, disconnected, degraded, available, unavailable]
+          description: Dependency connection status
+        response_time_ms:
+          type: integer
+          minimum: 0
+          description: Response time in milliseconds (if connected)
+        error:
+          type: string
+          description: Error message (if disconnected)
+        model:
+          type: string
+          description: Model name/version (for LLM dependency)
+
+    Error:
+      type: object
+      required:
+        - error
+        - message
+        - code
+      properties:
+        error:
+          type: string
+          description: HTTP error name
+          example: "Bad Request"
+        message:
+          type: string
+          description: Human-readable error message
+          example: "Query text is required"
+        code:
+          type: string
+          description: Machine-readable error code
+          enum:
+            - QUERY_TOO_LONG
+            - QUERY_REQUIRED
+            - INVALID_UUID
+            - QUERY_NOT_FOUND
+            - RATE_LIMIT_EXCEEDED
+            - DATABASE_ERROR
+            - VECTOR_DB_ERROR
+            - LLM_ERROR
+          example: "QUERY_REQUIRED"
+        details:
+          type: object
+          description: Additional error details (optional)
+          additionalProperties: true
+
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API key for authenticated requests (future, if rate limiting by key)
+
+security:
+  - ApiKeyAuth: []  # Optional: enable if implementing API key authentication

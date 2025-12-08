@@ -1,0 +1,320 @@
+.aboutContainer {
+  padding: 3rem 2rem;
+  min-height: 70vh;
+}
+
+.pageTitle {
+  font-size: 3rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: #333;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section {
+  margin-bottom: 3rem;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #667eea;
+  border-bottom: 3px solid #667eea;
+  padding-bottom: 0.5rem;
+}
+
+.section p {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.feature {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border-left: 4px solid #667eea;
+}
+
+.feature h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #333;
+}
+
+.feature p {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+}
+
+.philosophyList {
+  list-style: none;
+  padding: 0;
+  margin-top: 1.5rem;
+}
+
+.philosophyList li {
+  font-size: 1.125rem;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #764ba2;
+}
+
+.philosophyList strong {
+  color: #667eea;
+}
+
+.audienceGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.audienceCard {
+  background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 2px solid #667eea30;
+  text-align: center;
+}
+
+.audienceCard h4 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #333;
+}
+
+.audienceCard p {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+}
+
+.outcomesList {
+  list-style: none;
+  padding: 0;
+  margin-top: 1.5rem;
+}
+
+.outcomesList li {
+  font-size: 1.125rem;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #667eea;
+  position: relative;
+  padding-left: 2.5rem;
+}
+
+.outcomesList li::before {
+  content: "✓";
+  position: absolute;
+  left: 1rem;
+  color: #667eea;
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.techStack {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.techCategory {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid #e0e0e0;
+}
+
+.techCategory h4 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #667eea;
+  margin-bottom: 0.75rem;
+}
+
+.techCategory p {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+}
+
+.updateInfo {
+  background: #667eea15;
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+  margin-top: 1rem;
+}
+
+/* Responsive Design */
+
+/* Tablets (996px and below) */
+@media (max-width: 996px) {
+  .aboutContainer {
+    padding: 2.5rem 2rem;
+  }
+
+  .pageTitle {
+    font-size: 2.5rem;
+  }
+
+  .section {
+    max-width: 100%;
+  }
+
+  .features {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+}
+
+/* Mobile (768px and below) */
+@media (max-width: 768px) {
+  .aboutContainer {
+    padding: 2rem 1.5rem;
+  }
+
+  .pageTitle {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .section {
+    margin-bottom: 2.5rem;
+  }
+
+  .section h2 {
+    font-size: 1.5rem;
+    padding-bottom: 0.4rem;
+  }
+
+  .section p {
+    font-size: 1rem;
+  }
+
+  .features,
+  .audienceGrid,
+  .techStack {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .feature,
+  .audienceCard,
+  .techCategory {
+    padding: 1.25rem;
+  }
+
+  .philosophyList li,
+  .outcomesList li {
+    font-size: 1rem;
+    padding: 0.875rem;
+  }
+
+  .outcomesList li {
+    padding-left: 2.25rem;
+  }
+}
+
+/* Small Mobile (576px and below) */
+@media (max-width: 576px) {
+  .aboutContainer {
+    padding: 1.5rem 1rem;
+  }
+
+  .pageTitle {
+    font-size: 1.75rem;
+  }
+
+  .section {
+    margin-bottom: 2rem;
+  }
+
+  .section h2 {
+    font-size: 1.35rem;
+  }
+
+  .section p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .feature h3,
+  .audienceCard h4,
+  .techCategory h4 {
+    font-size: 1.1rem;
+  }
+
+  .philosophyList li {
+    font-size: 0.95rem;
+    padding: 0.75rem;
+  }
+
+  .outcomesList li {
+    font-size: 0.95rem;
+    padding: 0.875rem;
+    padding-left: 2rem;
+  }
+
+  .outcomesList li::before {
+    font-size: 1.1rem;
+    left: 0.75rem;
+  }
+}
+
+/* Extra Small Mobile (480px and below) */
+@media (max-width: 480px) {
+  .aboutContainer {
+    padding: 1.25rem 0.75rem;
+  }
+
+  .pageTitle {
+    font-size: 1.6rem;
+  }
+
+  .section h2 {
+    font-size: 1.25rem;
+    border-bottom-width: 2px;
+  }
+
+  .features,
+  .audienceGrid,
+  .techStack {
+    gap: 1.25rem;
+  }
+
+  .feature,
+  .audienceCard,
+  .techCategory {
+    padding: 1rem;
+    border-radius: 10px;
+  }
+}
